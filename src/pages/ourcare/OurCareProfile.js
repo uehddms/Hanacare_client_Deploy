@@ -57,7 +57,7 @@ const OurCareProfile = () => {
     }
     getFriendInfo();
     getFriendDetail();
-  }, []);
+  }, [getFriendInfo, getFriendDetail]);
 
   const onBtnDel = () => {
     if (window.confirm("삭제하시겠습니까?")) {
@@ -141,7 +141,11 @@ const OurCareProfile = () => {
               </Profilebox>
               <NameWrapper>
                 <h2>{friendInfo.nickname}</h2>
-                <img src="/images/delete.png" onClick={onBtnDel}></img>
+                <img
+                  alt="삭제"
+                  src="/images/delete.png"
+                  onClick={onBtnDel}
+                ></img>
               </NameWrapper>
             </LeftWrapper>
             <BoxWrapper>
@@ -219,7 +223,7 @@ const OurCareProfile = () => {
             ) : (
               <>
                 <h2>아직 체질이 기록되지 않았어요!</h2>
-                <img src="/images/ourcareyet.png"></img>
+                <img alt="체질x" src="/images/ourcareyet.png"></img>
                 <ShareBtn>자가진단 링크 공유하기</ShareBtn>
               </>
             )}
