@@ -52,7 +52,7 @@ const OurCareStart = () => {
           <br />
           우리케어로 함께 해요
         </h2>
-        <img src="/images/startdirection.png"></img>
+        <img alt="시작하기" src="/images/startdirection.png"></img>
         <button onClick={() => navigate(`/ourcare/family/list/${username}`)}>
           시작하기
         </button>
