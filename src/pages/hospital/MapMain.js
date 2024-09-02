@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import HospitalItem from "../../components/HospitalItem";
@@ -8,7 +7,6 @@ import { baseURL } from "../../api/baseURL";
 const { kakao } = window;
 
 const MapMain = () => {
-  const navigate = useNavigate();
   const [hospital, setHospital] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [filteredHospital, setFilteredHospital] = useState([]);
@@ -46,7 +44,7 @@ const MapMain = () => {
       });
       setFilteredHospital(filtered);
     }
-  }, [keyword]);
+  }, [keyword, hospital]);
 
   const myKeywordInput = useRef();
 
