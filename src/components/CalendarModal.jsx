@@ -29,7 +29,7 @@ function CalendarModal({ isOpen, closeModal, selectedDate }) {
   };
 
   // 특정 날짜 이벤트 불러오기
-  const getReservinfo = () => {
+  const getReservinfo = useCallback(() => {
     axios
       .get(
         `${baseURL}/calendars/event/detail/${username}/${formatDate(
@@ -37,18 +37,18 @@ function CalendarModal({ isOpen, closeModal, selectedDate }) {
         )}/`
       )
       .then((response) => {
-        setUserinfo(response.data.result); // 수정된 부분
+        setUserinfo(response.data.result);
       })
       .catch((error) => {
         console.log(error);
       });
-  };
+  }, [username, selectedDate]);
 
   useEffect(() => {
     if (selectedDate) {
       getReservinfo();
     }
-  }, [selectedDate]);
+  }, [selectedDate, getReservinfo]);
 
   useEffect(() => {
     if (userinfo.appointment && userinfo.appointment.length > 0) {
@@ -222,7 +222,7 @@ function CalendarModal({ isOpen, closeModal, selectedDate }) {
                   </p>
                   <DetailWrapper>
                     <p>자세히 보기</p>
-                    <img src="/images/seedetail.png"></img>
+                    <img alt="자세히 보기" src="/images/seedetail.png"></img>
                   </DetailWrapper>
                 </ConditionBox>
                 <ConditionBox>
@@ -237,7 +237,7 @@ function CalendarModal({ isOpen, closeModal, selectedDate }) {
                   </p>
                   <DetailWrapper>
                     <p>자세히 보기</p>
-                    <img src="/images/seedetail.png"></img>
+                    <img alt="자세히 보기" src="/images/seedetail.png"></img>
                   </DetailWrapper>
                 </ConditionBox>
               </ConditionWrapper>
@@ -510,11 +510,6 @@ const Notimg = styled.img`
   width: 230px;
   display: block;
   margin: 20px auto;
-`;
-
-const BigBar = styled.img`
-  width: 100%;
-  text-align: center;
 `;
 
 const ConditionWrapper = styled.div`
