@@ -29,7 +29,7 @@ function CalendarModal({ isOpen, closeModal, selectedDate }) {
   };
 
   // 특정 날짜 이벤트 불러오기
-  const getReservinfo = useCallback(() => {
+  const getReservinfo = () => {
     axios
       .get(
         `${baseURL}/calendars/event/detail/${username}/${formatDate(
@@ -37,13 +37,13 @@ function CalendarModal({ isOpen, closeModal, selectedDate }) {
         )}/`
       )
       .then((response) => {
-        setUserinfo(response.data.result);
+        setUserinfo(response.data.result); // 수정된 부분
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [username, selectedDate]);
-  햐;
+  };
+
   useEffect(() => {
     if (selectedDate) {
       getReservinfo();
