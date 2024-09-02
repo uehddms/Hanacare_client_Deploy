@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import SetMyModal from "../../components/SetMyModal";
 import ReservateModal from "../../components/ReservateModal";
@@ -8,7 +8,6 @@ import { baseURL } from "../../api/baseURL";
 import { useSelector } from "react-redux";
 
 const HospitalHome = () => {
-  const location = useLocation();
   const { id } = useParams();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("소개");
@@ -19,7 +18,7 @@ const HospitalHome = () => {
   const [review, setReview] = useState([]);
   const [reviewDetail, setReviewDetail] = useState([]);
 
-  const getInfo = () => {
+  const getInfo = useCallback(() => {
     axios
       .get(`${baseURL}/clinic/info/${id}/`)
       .then((response) => {
@@ -28,13 +27,9 @@ const HospitalHome = () => {
       .catch((error) => {
         console.log(error);
       });
-  };
-
-  useEffect(() => {
-    getInfo();
   }, [id]);
 
-  const getmyInfo = () => {
+  const getmyInfo = useCallback(() => {
     axios
       .get(`${baseURL}/users/profile?username=${username}`)
       .then((response) => {
@@ -43,15 +38,9 @@ const HospitalHome = () => {
       .catch((error) => {
         console.log(error);
       });
-  };
-
-  useEffect(() => {
-    if (username) {
-      getmyInfo();
-    }
   }, [username]);
 
-  const getReview = () => {
+  const getReview = useCallback(() => {
     axios
       .get(`${baseURL}/review/cate/${id}/`)
       .then((response) => {
@@ -61,13 +50,9 @@ const HospitalHome = () => {
         alert("리뷰실패");
         console.log(error);
       });
-  };
-
-  useEffect(() => {
-    getReview();
   }, [id]);
 
-  const getReviewDetail = () => {
+  const getReviewDetail = useCallback(() => {
     axios
       .get(`${baseURL}/review?clinic=${id}`)
       .then((response) => {
@@ -77,11 +62,25 @@ const HospitalHome = () => {
         alert("리뷰디테일실패");
         console.log(error);
       });
-  };
+  }, [id]);
+
+  useEffect(() => {
+    getInfo();
+  }, [id, getInfo]);
+
+  useEffect(() => {
+    if (username) {
+      getmyInfo();
+    }
+  }, [username, getmyInfo]);
+
+  useEffect(() => {
+    getReview();
+  }, [id, getReview]);
 
   useEffect(() => {
     getReviewDetail();
-  }, [id]);
+  }, [id, getReviewDetail]);
 
   const [isMyModalOpen, setISMyModalOpen] = useState(false);
   const [isSetmy, setIsmy] = useState(false);
@@ -256,8 +255,8 @@ const HospitalHome = () => {
             </DoctorWrapper>
             <SubTitle>사진</SubTitle>
             <PhotoWrapper>
-              <img src={pickhospital.image_1}></img>
-              <img src={pickhospital.image_2}></img>
+              <img alt="리뷰" src={pickhospital.image_1}></img>
+              <img alt="리뷰" src={pickhospital.image_2}></img>
             </PhotoWrapper>
           </>
         ) : (
@@ -267,7 +266,7 @@ const HospitalHome = () => {
                 <SubTitle2>이런 점이 좋았어요</SubTitle2>
                 <ReviewWrapper>
                   <ReviewOption>
-                    <img src="/images/review_clean.png"></img>
+                    <img alt="리뷰" src="/images/review_clean.png"></img>
                     <p>시설이 쾌적해요</p>
                   </ReviewOption>
                   <Reviewnum>
@@ -277,7 +276,7 @@ const HospitalHome = () => {
                 </ReviewWrapper>
                 <ReviewWrapper>
                   <ReviewOption>
-                    <img src="/images/review_medicine.png"></img>
+                    <img alt="리뷰" src="/images/review_medicine.png"></img>
                     <p>약 처방이 잘 맞아요</p>
                   </ReviewOption>
                   <Reviewnum>
@@ -287,7 +286,7 @@ const HospitalHome = () => {
                 </ReviewWrapper>
                 <ReviewWrapper>
                   <ReviewOption>
-                    <img src="/images/review_heart.png"></img>
+                    <img alt="리뷰00" src="/images/review_heart.png"></img>
                     <p>건강 관리에 철저해요</p>
                   </ReviewOption>
                   <Reviewnum>
@@ -297,7 +296,7 @@ const HospitalHome = () => {
                 </ReviewWrapper>
                 <ReviewWrapper>
                   <ReviewOption>
-                    <img src="/images/review_nice.png"></img>
+                    <img alt="리뷰0" src="/images/review_nice.png"></img>
                     <p>의료진, 직원이 친절해요</p>
                   </ReviewOption>
                   <Reviewnum>
@@ -330,7 +329,7 @@ const HospitalHome = () => {
                 <SubTitle2>나의 이야기</SubTitle2>
                 <form>
                   <ReviewQuest>
-                    <img src="/images/puplespot.png"></img>
+                    <img alt="리뷰1" src="/images/puplespot.png"></img>
                     <h3>어떤 점이 좋았나요?</h3>
                   </ReviewQuest>
                   <CheckboxWrapper>
@@ -378,7 +377,7 @@ const HospitalHome = () => {
                     </CheckboxLabel>
                   </CheckboxWrapper>
                   <ReviewQuest>
-                    <img src="/images/puplespot.png"></img>
+                    <img alt="리뷰" src="/images/puplespot.png"></img>
                     <h3>{user.nickname}님의 이야기를 들려주세요</h3>
                   </ReviewQuest>
                   <CommentWrapper>
@@ -615,9 +614,6 @@ const DoctorBox = styled.div`
     color: white;
     font-size: 8px;
   }
-`;
-const Doctor2 = styled.img`
-  width: 80px !important;
 `;
 
 const PhotoWrapper = styled.div`
