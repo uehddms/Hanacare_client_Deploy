@@ -10,14 +10,14 @@ const MealAnalysis = () => {
   const navigate = useNavigate();
   const params = useParams();
   const [mealData, setMealData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [setIsLoading] = useState(false);
 
   const [userNickname, setUserNickname] = useState("");
 
   const getUserNickname = async () => {
     const result = await getuserData(params.username);
 
-    if (result.status == 200) {
+    if (result.status === 200) {
       setUserNickname(result.data.result.nickname);
     } else {
     }
@@ -25,7 +25,7 @@ const MealAnalysis = () => {
 
   useEffect(() => {
     getUserNickname();
-  }, [params.username]);
+  }, [params.username, getUserNickname]);
 
   const today = new Date(params.date);
   const week = ["일", "월", "화", "수", "목", "금", "토"];
@@ -60,7 +60,7 @@ const MealAnalysis = () => {
     };
 
     fetchMealData();
-  }, [params.date]);
+  }, [params.date, params.username]);
 
   //테스트용 데이터
   const user = {
