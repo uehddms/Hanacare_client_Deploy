@@ -12,9 +12,7 @@ import { useSelector } from "react-redux";
 
 function ReservateModal({ isReservateOpen, closeReservateModal, cliniccall }) {
   // 수정된 부분
-  const navigate = useNavigate();
   const username = useSelector((state) => state.username);
-
   const [ButtonClick, setButtonClick] = useState(true);
   const handleButtonclick = () => {
     setButtonClick(false);

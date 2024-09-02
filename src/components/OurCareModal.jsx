@@ -28,7 +28,7 @@ function OurCareModal({ isOpen, closeModal, username, addProfile }) {
     };
     const result = await post_ourcare(data);
 
-    if (result.status == 200) {
+    if (result.status === 200) {
       alert("우리케어 추가에 성공하였습니다. ");
     } else {
       alert("우리케어 추가에 실패하였습니다. 다시 입력해 주세요.");
