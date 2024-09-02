@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { setUsername } from "../redux/action";
-import { useSelector } from "react-redux";
 import { baseURL } from "../api/baseURL";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
@@ -13,7 +12,7 @@ const Mainpage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const params = useParams();
-  const [param2, setParam2] = useState(params.username);
+  const [param2] = useState(params.username);
 
   //테스트용 데이터
   const userdata = {
@@ -77,9 +76,10 @@ const Mainpage = () => {
           console.log(error);
         });
     };
+
     getInfo();
     dispatch(setUsername(param2));
-  }, []);
+  }, [param2, dispatch]);
 
   const formatReservationDate = (reservationDate) => {
     if (!reservationDate) return ""; // reservationDate가 없으면 빈 문자열 반환
