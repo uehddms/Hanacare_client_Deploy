@@ -9,9 +9,8 @@ import { baseURL } from "../../api/baseURL";
 
 const OurCareFamily = () => {
   const navigate = useNavigate();
-  const params = useParams();
   const [isModalOpen, setISModalOpen] = useState(false);
-  const [currentProfileId, setCurrentProfileId] = useState(null);
+  const [setCurrentProfileId] = useState(null);
   const [friend, setFriend] = useState([]);
   const username = useSelector((state) => state.username);
 
@@ -62,7 +61,7 @@ const OurCareFamily = () => {
         });
     };
     getInfo();
-  }, []);
+  }, [username]);
 
   const profileImages = [
     "/images/profile1.png",
@@ -72,11 +71,6 @@ const OurCareFamily = () => {
     "/images/profile5.png",
     "/images/profile6.png",
   ];
-
-  const getRandomImage = () => {
-    const randomIndex = Math.floor(Math.random() * profileImages.length);
-    return profileImages[randomIndex];
-  };
 
   return (
     <Container>
