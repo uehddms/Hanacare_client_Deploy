@@ -35,7 +35,7 @@ const Condition = () => {
     window.scrollTo(0, 0);
     initializePayload();
     fetchConditionData();
-  }, []);
+  }, [initializePayload, fetchConditionData]);
 
   const initializePayload = () => {
     setPayload({
@@ -47,7 +47,7 @@ const Condition = () => {
     });
   };
 
-  const fetchConditionData = async () => {
+  const fetchConditionData = useCallback(async () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
@@ -72,7 +72,7 @@ const Condition = () => {
       console.error("Error fetching condition data:", error);
     }
     setIsLoading(false);
-  };
+  }, [params.username, params.date]);
 
   // 카테고리별 요소들
   const elementCategories = {
