@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Container, Title } from "./OurCareStart";
@@ -24,7 +24,7 @@ const OurCareProfile = () => {
   const [friendDetail, setFriendDetail] = useState([]);
 
   // 나의 친구 리스트 정보
-  const getFriendInfo = () => {
+  const getFriendInfo = useCallback(() => {
     axios
       .get(`${baseURL}/users/profile?username=${params.id}`)
       .then((response) => {
@@ -34,10 +34,10 @@ const OurCareProfile = () => {
       .catch((error) => {
         console.log(error);
       });
-  };
+  }, [params.id]);
 
   // 친구 프로필
-  const getFriendDetail = () => {
+  const getFriendDetail = useCallback(() => {
     axios
       .get(`${baseURL}/users/ourcare/profile/${params.id}`)
       .then((response) => {
@@ -47,7 +47,7 @@ const OurCareProfile = () => {
       .catch((error) => {
         console.log(error);
       });
-  };
+  }, [params.id]);
 
   useEffect(() => {
     if (window.Kakao) {

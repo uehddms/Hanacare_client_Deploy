@@ -31,13 +31,7 @@ const Condition = () => {
     memo: "",
   });
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    initializePayload();
-    fetchConditionData();
-  }, [initializePayload, fetchConditionData]);
-
-  const initializePayload = () => {
+  const initializePayload = useCallback(() => {
     setPayload({
       user: params.username,
       date: params.date,
@@ -45,7 +39,7 @@ const Condition = () => {
       mood_cate: "",
       memo: "",
     });
-  };
+  }, [params.username, params.date]);
 
   const fetchConditionData = useCallback(async () => {
     setIsLoading(true);
@@ -73,6 +67,12 @@ const Condition = () => {
     }
     setIsLoading(false);
   }, [params.username, params.date]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    initializePayload();
+    fetchConditionData();
+  }, [initializePayload, fetchConditionData]);
 
   // 카테고리별 요소들
   const elementCategories = {

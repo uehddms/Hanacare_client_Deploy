@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { quit } from "../../api/users/quit";
@@ -97,18 +97,17 @@ const Cancel = () => {
   const params = useParams();
   const [userData, setUserData] = useState("");
 
-  const getUserNickname = async () => {
+  const getUserNickname = useCallback(async () => {
     const result = await getuserData(params.username);
 
     if (result.status === 200) {
       setUserData(result.data.result.nickname);
-    } else {
     }
-  };
+  }, [params.username]);
 
   useEffect(() => {
     getUserNickname();
-  }, [params.username, getUserNickname]);
+  }, [getUserNickname]);
 
   // 이전 페이지도 이동 버튼
   const BackButton = () => {

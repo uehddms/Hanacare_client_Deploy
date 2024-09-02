@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./Meal.css";
 
@@ -10,7 +10,7 @@ const Mealmain = () => {
   const params = useParams();
   const [userNickname, setUserNickname] = useState("");
 
-  const getUserNickname = async () => {
+  const getUserNickname = useCallback(async () => {
     const result = await getuserData(params.username);
 
     if (result.status === 200) {
@@ -21,13 +21,12 @@ const Mealmain = () => {
         );
         navigate(-1);
       }
-    } else {
     }
-  };
+  }, [params.username, navigate]);
 
   useEffect(() => {
     getUserNickname();
-  }, [params.username, getUserNickname]);
+  }, [getUserNickname]);
 
   const today = new Date(params.date);
   const week = ["일", "월", "화", "수", "목", "금", "토"];

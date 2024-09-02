@@ -14,18 +14,16 @@ const MealAnalysis = () => {
 
   const [userNickname, setUserNickname] = useState("");
 
-  const getUserNickname = async () => {
+  const getUserNickname = useCallback(async () => {
     const result = await getuserData(params.username);
-
     if (result.status === 200) {
       setUserNickname(result.data.result.nickname);
-    } else {
     }
-  };
+  }, [params.username]);
 
   useEffect(() => {
     getUserNickname();
-  }, [params.username, getUserNickname]);
+  }, [getUserNickname]);
 
   const today = new Date(params.date);
   const week = ["일", "월", "화", "수", "목", "금", "토"];
@@ -60,7 +58,7 @@ const MealAnalysis = () => {
     };
 
     fetchMealData();
-  }, [params.date, params.username]);
+  }, [params.date, params.username, setIsLoading]);
 
   //테스트용 데이터
   const user = {

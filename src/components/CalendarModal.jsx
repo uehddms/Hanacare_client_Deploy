@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
@@ -20,16 +20,8 @@ function CalendarModal({ isOpen, closeModal, selectedDate }) {
     return format(date, "yyyy-MM-dd", { locale: ko });
   };
 
-  const formatReservationDate = (reservationDate) => {
-    if (!reservationDate) return ""; // reservationDate가 없으면 빈 문자열 반환
-    const [datePart, timePart] = reservationDate.split("T");
-    if (!timePart) return datePart; // timePart가 없으면 datePart만 반환
-    const [hours, minutes] = timePart.split(":");
-    return `${datePart} ${hours}:${minutes}`;
-  };
-
   // 특정 날짜 이벤트 불러오기
-  const getReservinfo = () => {
+  const getReservinfo = useCallback(() => {
     axios
       .get(
         `${baseURL}/calendars/event/detail/${username}/${formatDate(
@@ -37,12 +29,12 @@ function CalendarModal({ isOpen, closeModal, selectedDate }) {
         )}/`
       )
       .then((response) => {
-        setUserinfo(response.data.result); // 수정된 부분
+        setUserinfo(response.data.result);
       })
       .catch((error) => {
         console.log(error);
       });
-  };
+  }, [username, selectedDate]);
 
   useEffect(() => {
     if (selectedDate) {
