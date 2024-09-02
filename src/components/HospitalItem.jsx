@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 const HospitalItem = ({ item }) => {
   const navigate = useNavigate();
-  const [selectedButton, setSelectedButton] = useState("소개");
   const username = useSelector((state) => state.username);
 
   const handleClick = () => {
@@ -81,29 +80,6 @@ const HospitalInfo = styled.p`
 const Bold = styled.span`
   font-weight: bolder;
   margin-right: 5px;
-`;
-
-const SecondBox = styled.div`
-  display: flex;
-  position: relative;
-
-  img {
-    position: absolute;
-    width: 15px;
-    top: 22px;
-    left: 43px;
-  }
-`;
-
-const Reviewnum = styled.h3`
-  margin-left: 10px;
-  font-size: 15px;
-  color: #7350ff;
-`;
-
-const ReviewText = styled.h3`
-  margin: auto 35px;
-  font-size: 12px;
 `;
 
 export default HospitalItem;
