@@ -100,7 +100,7 @@ const Cancel = () => {
   const getUserNickname = async () => {
     const result = await getuserData(params.username);
 
-    if (result.status == 200) {
+    if (result.status === 200) {
       setUserData(result.data.result.nickname);
     } else {
     }
@@ -108,7 +108,7 @@ const Cancel = () => {
 
   useEffect(() => {
     getUserNickname();
-  }, [params.username]);
+  }, [params.username, getUserNickname]);
 
   // 이전 페이지도 이동 버튼
   const BackButton = () => {
@@ -138,7 +138,7 @@ const Cancel = () => {
 
       const result = await quit(data);
 
-      if (result.status == 200) {
+      if (result.status === 200) {
         alert("탈퇴되었습니다. 한케어는 고객님과 함께해서 행복했어요 ☘️");
         navigate("/"); //삭제 후 Startpage로 가게 하기
       } else {
