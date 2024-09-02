@@ -93,7 +93,7 @@ const Signup = () => {
       };
       const result = await signup(data);
 
-      if (result.status == 201) {
+      if (result.status === 201) {
         alert("회원가입에 성공하였습니다. ");
         navigate("/login");
       } else {

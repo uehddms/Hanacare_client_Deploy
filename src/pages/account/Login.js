@@ -41,7 +41,7 @@ const Login = () => {
     };
     const result = await login(data);
 
-    if (result.status == 200) {
+    if (result.status === 200) {
       alert("로그인에 성공하였습니다. ");
       dispatch(setUsername(values.id));
       navigate(`/mainpage/${values.id}`);
