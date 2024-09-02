@@ -55,7 +55,7 @@ const CalendarMain = () => {
     };
 
     fetchEventsAndReservations();
-  }, [date]);
+  }, [date, params.username]);
 
   const BackButton = () => {
     navigate(-1);
@@ -90,10 +90,6 @@ const CalendarMain = () => {
   const DateClick = (date) => {
     setSelectedDate(date);
     openModal();
-  };
-
-  const formatDate = (date) => {
-    return format(date, "M월 d일 EEEE", { locale: ko });
   };
 
   return (
