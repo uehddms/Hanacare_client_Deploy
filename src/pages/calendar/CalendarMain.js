@@ -4,7 +4,6 @@ import axios from "axios";
 import { Container, Title } from "../hospital/HospitalHome";
 import Calendar from "react-calendar";
 import { format, isSameDay } from "date-fns";
-import { ko } from "date-fns/locale";
 import "react-calendar/dist/Calendar.css";
 import "./CalendarMain.css";
 import CalendarModal from "../../components/CalendarModal";
